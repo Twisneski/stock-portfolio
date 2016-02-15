@@ -7,6 +7,29 @@ const mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 3000;
 
+const MONGODB_HOST = process.env.MONGODB_HOST || 'localhost';
+const MONGODB_PORT = process.env.MONGODB_PORT || 11308;
+const MONGODB_USER = process.env.MONGODB_USER || '';
+const MONGODB_PASS = process.env.MONGODB_PASS || '';
+const MONGODB_NAME = process.env.MONGODB_NAME || 'stock-portfolio';
+
+const MONGODB_URL_PREFIX = MONGODB_USER
+  ? `${MONGODB_USER}:${MONGODB_PASS}@`
+  : '';
+
+const MONGODB_URL = `mongodb://${MONGODB_URL_PREFIX}${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_NAME}`;
+//ternary operator
+
+app.set('view engine', 'jade');
+//to be able to use jade
+app.locals.title = 'Stock Market App';
+//now used throughout using jade {title}
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+//see bodyparser docs https://github.com/expressjs/body-parser
+//ensures it is parsed through express
+app.use(routes);
+//this page can now use routes
 
 mongoose.connect(MONGODB_URL);
 mongoose.connection.on('open', () => {
@@ -14,10 +37,3 @@ mongoose.connection.on('open', () => {
     console.log(`Node.js server started. Listening on port ${PORT}`);
   });
 });
-
-app.locals.title = 'Stock Market App';
-//now used throughout using jade {title}
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-//see bodyparser docs https://github.com/expressjs/body-parser
-//ensures it is parsed through express
