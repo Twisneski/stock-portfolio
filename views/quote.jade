@@ -1,0 +1,16 @@
+//- child.jade
+extends ./layout.jade
+block .container
+  h1 Quote
+  form(method='POST')
+    .form-group
+      label Name
+      input(type='text',name='name', placeholder='Name')
+    .form-group
+      label Stock Symbol
+      input(type='text',name='name', placeholder='Stock Symbol')
+    .form-group
+      label Quantity
+      input(type='email',name='email', placeholder='Quantity')
+    .form-group
+      input(type='submit', value='Current Price')
