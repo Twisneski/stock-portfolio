@@ -40,3 +40,31 @@ app.use(routes);
 //this page can now use routes
 
 
+app.get('/', (req, res) => {
+  db.collection('marketValue').findOne({}, {sort: {_id: -1}}, (err, doc) => {
+    if (err) throw err;
+
+    res.render('index', {
+      date: new Date(),
+      marketValue: doc.top[0]
+    });
+  });
+});
+//portfolio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

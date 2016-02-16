@@ -1,0 +1,19 @@
+//- child.jade
+extends ./layout.jade
+block .container
+  h1 #{title} - Quote for a Stock
+  form(method='POST')
+    .form-group
+      label First Name
+      input(type='text',name='name', placeholder='First Name')
+    .form-group
+      label Last Name
+      input(type='text',name='name', placeholder='Last Name')
+    .form-group
+      label Stock Symbol
+      input(type='text',name='name', placeholder='Stock Symbol')
+    .form-group
+      label Quantity
+      input(type='email',name='email', placeholder='Quantity')
+    .form-group
+      input(type='submit', value='Current Price')

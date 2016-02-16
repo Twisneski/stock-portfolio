@@ -1,21 +1,37 @@
 'use strict';
 
 const Quote = require('../models/quote.models');
+const request = require('request');
 
 module.exports.index = (req, res) => {
   res.render('quote');
 };
+//quote here pulls the jade file
 
 module.exports.new = (req, res) => {
-  const obj = new Quote({
-    name: req.body.symbol,
-    symbol: req.body.symbol,
-    quantity: req.body.quantity
-  });
+  const symbol = req.body.symbol;
+  //this comes from the input form
+  const URL = `http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=${symbol}`;
 
-  obj.save((err, newObj) => {
+  //http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=AAPL
+
+  request.get(URL, (err, response, body) => {
     if (err) throw err;
+    console.log('body', body);
+    body = JSON.parse(body);
+    const obj = new Quote({
+      name: body.Name,
+      symbol: body.Symbol,
 
-    res.send(`<h1>Thanks for contacting us ${newObj.name}</h1>`);
+    });
+    //this comes from the URL
+
+    obj.save((err, newObj) =>{
+      if (err) throw err;
+      //saving to db
+
+      res.send(`<h1> Here is your quote, ${newObj.name}</h1>`);
+    });
   });
+
 };

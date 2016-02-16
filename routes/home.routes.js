@@ -3,10 +3,11 @@
 const express = require('express');
 const router = express.Router();
 
-const quoteControllers = require('../controllers/quote.controllers');
 
-router.get('/quote', quoteControllers.index);
+const homeControllers = require('../controllers/home.controllers');
+
+router.get('/home', homeControllers.index);
 //sets url to /contact and index is the contact page
-router.post('/quote', quoteControllers.new);
+router.post('/home', homeControllers.new);
 
 module.exports = router;
