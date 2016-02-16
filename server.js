@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 //use tmp for gitignore files
 const mongoose = require('mongoose');
 
+const routes = require('./routes/');
+
 const PORT = process.env.PORT || 3000;
 
 const MONGODB_HOST = process.env.MONGODB_HOST || 'localhost';
@@ -19,6 +21,12 @@ const MONGODB_URL_PREFIX = MONGODB_USER
 
 const MONGODB_URL = `mongodb://${MONGODB_URL_PREFIX}${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_NAME}`;
 //ternary operator
+mongoose.connect(MONGODB_URL);
+mongoose.connection.on('open', () => {
+  app.listen(PORT, () => {
+    console.log(`Node.js server started. Listening on port ${PORT}`);
+  });
+});
 
 app.set('view engine', 'jade');
 //to be able to use jade
@@ -31,9 +39,4 @@ app.use(bodyParser.json());
 app.use(routes);
 //this page can now use routes
 
-mongoose.connect(MONGODB_URL);
-mongoose.connection.on('open', () => {
-  app.listen(PORT, () => {
-    console.log(`Node.js server started. Listening on port ${PORT}`);
-  });
-});
+
